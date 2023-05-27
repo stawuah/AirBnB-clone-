@@ -75,9 +75,7 @@ const updateCustomer = async (req, res) => {
   }
 
 }
-/////////////////////////
 // Uploads an image file
-/////////////////////////
 const uploadImage = async (imagePath) => {
 
   // Use the uploaded file's name as the asset's public ID and 
