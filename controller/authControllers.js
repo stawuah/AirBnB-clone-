@@ -137,9 +137,9 @@ const registerCustomer = async (req, res) => {
     res.status(201).json({ 'savedUser': savedUser, 'savedImage': savedImage })
 
     twilio.messages.create({
-      from: '+16206589313',
-      to: '+233201487955',
-      body: `Hello ${newUser.name} Thank you for registering your account with Hunt's .We're thrilled to have you on board! Before you can start using our services, please confirm your account by signing in, you are welcome ${newUser.name}`
+      from: '<twilio number or *company name*>',
+      to: '<users phone number >',
+      body: `Hello ${newUser.name} Thank you for registering your account with AirBnB .We're thrilled to have you on board! Before you can start using our services, please confirm your account by signing in, you are welcome ${newUser.name}`
     })
       .then((res) => console.log("Message has  been sent"))
 
