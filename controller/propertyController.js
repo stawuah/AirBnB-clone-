@@ -143,8 +143,8 @@ const updateProperty = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
   twilio.messages.create({
-    from: '+16206589313',
-    to: '+233201487955',
+    from: '<twilio number>',
+    to: '<users number>',
     body: `Hello, you have just updated your property with Hunt's .make much and help more !!`
   })
     .then((res) => console.log("Message has  been sent"))
@@ -163,8 +163,6 @@ const deleteProperty = async (req, res) => {
   }
 
 }
-
-
 
 module.exports = {
   getPropertyList,
