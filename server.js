@@ -1,10 +1,10 @@
 const express = require('express')
-require('colors')
 const mongoose = require('mongoose')
 require('dotenv').config()
 //const helmet = require('helmet')
 const connectDB = require('./config/db');
 //const cors = require('cors')
+const colors = require("colors")
 const app = express()
 const port = 8080
 

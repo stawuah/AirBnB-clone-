@@ -1,8 +1,6 @@
 const twilio = require('twilio')(process.env.SID, process.env.AUTH_TOKEN)
 require('dotenv').config()
 const Property = require('../model/propertySchema')
-const Image = require('../model/imageSchema')
-const mime = require('mime-types');
 const cloudinary = require('cloudinary').v2;
 
 cloudinary.config({
@@ -61,8 +59,7 @@ const uploadImage = async (imagePath) => {
   try {
     // Upload the image
     const result = await cloudinary.uploader.upload(imagePath, options);
-    console.log(result);
-    return result.public_id;
+    return result
   } catch (error) {
     console.error(error);
   }
@@ -73,11 +70,11 @@ const uploadImage = async (imagePath) => {
 const createProperty = async (req, res) => {
   try {
     const { owner, title, description, price, address, city, state, country, zipcode, available, image } = req.body
-
-    const imagePublicId = await uploadImage(image);
+    const imagePublic = await uploadImage(image);
+    console.log(imagePublic)
 
     const newProperty = new Property({
-      owner,
+      owner: req.user.id,
       title,
       description,
       price,
@@ -87,21 +84,11 @@ const createProperty = async (req, res) => {
       country,
       zipcode,
       available,
-      image: imagePublicId,
-    });
-
-    const fileExtensions = ['png', 'jpeg', 'gif', 'svg+xml']; // Replace with the actual file extensions of the image
-    const contentType = fileExtensions
-      .map(extension => mime.lookup(extension))
-      .find(contentType => contentType !== false)
-    const newImage = new Image({
-      user: newProperty.owner,
       image: {
-        data: image, // Assuming you have the binary image data available
-        contentType: contentType, // Replace with the appropriate MIME type of the image
+        public_id: imagePublic.public_id,
+        url: imagePublic.secure_url
       }
     });
-    const savedImage = await newImage.save();
 
     twilio.messages.create({
       from: '+16206589313',
@@ -112,7 +99,7 @@ const createProperty = async (req, res) => {
 
     const savedProperty = await newProperty.save()
     console.log("savedProperty", savedProperty)
-    res.status(201).json({ "savedProperty": savedProperty, "savedImage": savedImage })
+    res.status(201).json({ "savedProperty": savedProperty, })
 
   } catch (error) {
     console.log(error);
@@ -171,3 +158,6 @@ module.exports = {
   updateProperty,
   deleteProperty,
 }
+
+
+// "savedImage": savedImage

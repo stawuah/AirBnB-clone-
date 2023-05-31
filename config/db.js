@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-mongoose.set('strictQuery' , true)
+mongoose.set('strictQuery', true)
 
 const connectDB = async () => {
     try {
@@ -9,6 +9,6 @@ const connectDB = async () => {
         console.log(error)
         process.exit(1)
     }
-} 
+}
 
-module.exports=  connectDB
+module.exports = connectDB

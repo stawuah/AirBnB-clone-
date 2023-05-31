@@ -3,21 +3,29 @@
 const mongoose = require('mongoose');
 
 const UserSchema = mongoose.Schema({
-    name:{
+    name: {
         type: String,
-        required: [true , 'Dear customer please add a name'], 
+        required: [true, 'Dear customer please add a name'],
     },
-    email:{
+    email: {
         type: String,
-        required: [true , 'Dear customer please add a name'], 
+        required: [true, 'Dear customer please add a name'],
         unique: true,
         lowercase: true,
-        trim: true, 
-        match : [/^[\w-.]+@([\w-]+\.)+[\w-]{2,}$/, 'Please your email']
+        trim: true,
+        match: [/^[\w-.]+@([\w-]+\.)+[\w-]{2,}$/, 'Please your email']
     },
-    password:{
+    image: {
+        public_id: {
+            type: [String]
+        },
+        url: {
+            type: [String]
+        }
+    },
+    password: {
         type: String,
-        required: [true , 'Dear customer please use your usual email password '], 
+        required: [true, 'Dear customer please use your usual email password '],
     },
     forgotPassword: {
         type: mongoose.Schema.Types.ObjectId,
@@ -26,4 +34,4 @@ const UserSchema = mongoose.Schema({
 },)
 
 
-module.exports = mongoose.model('User' , UserSchema)
+module.exports = mongoose.model('User', UserSchema)

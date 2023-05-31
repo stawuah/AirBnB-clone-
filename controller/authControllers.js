@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../model/userSchema');
 const Image = require('../model/imageSchema')
 const ForgotSchema = require('../model/resetSchema.js');
-const generateToken = require('../utils/auth');
+const generateToken = require('../utils/tokenGen');
 const jwtSecretKey = process.env.JWT_SECRET;
 const mime = require('mime-types');
 const cloudinary = require('cloudinary').v2;
@@ -40,12 +40,12 @@ const login = async (req, res) => {
     throw new Error('Invalid Password or email !')
   }
 
-  twilio.messages.create({
-    from: '+16206589313',
-    to: '+233201487955',
-    body: `Hello ${user.name} Thank you logging into your account with Hunt's .We're thrilled to have you on board! Before you can start using our services ${user.name}`
-  })
-    .then((res) => console.log("Message has  been sent"))
+  // twilio.messages.create({
+  //   from: '+16206589313',
+  //   to: '+233201487955',
+  //   body: `Hello ${user.name} Thank you logging into your account with Hunt's .We're thrilled to have you on board! Before you can start using our services ${user.name}`
+  // })
+  //   .then((res) => console.log("Message has  been sent"))
 }
 
 // logout
@@ -89,8 +89,8 @@ const uploadImage = async (imagePath) => {
   try {
     // Upload the image
     const result = await cloudinary.uploader.upload(imagePath, options);
-    console.log(result);
-    return result.public_id;
+    // console.log(result);
+    return result
   } catch (error) {
     console.error(error);
   }
@@ -107,38 +107,29 @@ const registerCustomer = async (req, res) => {
     const salt = await bcrypt.genSalt(10)
     const hashedPassword = await bcrypt.hash(password, salt)
 
-    const imagePublicId = await uploadImage(image);
-
+    const imageName = await uploadImage(image);
+    console.log(imageName);
     const newUser = await new User({
       name,
       email,
       password: hashedPassword,
-      image: imagePublicId
+      image: {
+        public_id: imageName.public_id,
+        url: imageName.secure_url
+      }
     })
 
     if (!newUser) {
       return res.status(400).json({ message: 'Please add required credentials.' });
     }
-    const fileExtensions = ['png', 'jpeg', 'gif', 'svg+xml']; // Replace with the actual file extensions of the image
-    const contentType = fileExtensions
-      .map(extension => mime.lookup(extension))
-      .find(contentType => contentType !== false)
-    const newImage = new Image({
-      user: newUser._id,
-      image: {
-        data: image, // Assuming you have the binary image data available
-        contentType: contentType, // Replace with the appropriate MIME type of the image
-      }
-    });
 
-    const savedImage = await newImage.save();
 
     const savedUser = await newUser.save()
-    res.status(201).json({ 'savedUser': savedUser, 'savedImage': savedImage })
+    res.status(201).json({ 'savedUser': savedUser })
 
     twilio.messages.create({
-      from: '<twilio number or *company name*>',
-      to: '<users phone number >',
+      from: '+16206589313',
+      to: '+2330201487955',
       body: `Hello ${newUser.name} Thank you for registering your account with AirBnB .We're thrilled to have you on board! Before you can start using our services, please confirm your account by signing in, you are welcome ${newUser.name}`
     })
       .then((res) => console.log("Message has  been sent"))
