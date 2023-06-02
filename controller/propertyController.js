@@ -91,8 +91,8 @@ const createProperty = async (req, res) => {
     });
 
     twilio.messages.create({
-      from: '+16206589313',
-      to: '+233201487955',
+      from: '<twilio phone number>',
+      to: '<<user Phone number{should follow type of country code format}>',
       body: `Hello ${newProperty.title}, Thank you adding your property with Hunt's .make much and help more !!`
     })
       .then((res) => console.log("Message has  been sent"))
@@ -131,7 +131,7 @@ const updateProperty = async (req, res) => {
   }
   twilio.messages.create({
     from: '<twilio number>',
-    to: '<users number>',
+    to: '<user Phone number{should follow type of country code format}>',
     body: `Hello, you have just updated your property with Hunt's .make much and help more !!`
   })
     .then((res) => console.log("Message has  been sent"))

@@ -4,8 +4,7 @@ const crypto = require('crypto');
 require('dotenv').config()
 const jwt = require('jsonwebtoken');
 const User = require('../model/userSchema');
-const Image = require('../model/imageSchema')
-const ForgotSchema = require('../model/resetSchema.js');
+const ForgotSchema = require('../model/resetSchema');
 const generateToken = require('../utils/tokenGen');
 const jwtSecretKey = process.env.JWT_SECRET;
 const mime = require('mime-types');
