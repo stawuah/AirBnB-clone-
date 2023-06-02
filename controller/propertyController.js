@@ -92,7 +92,7 @@ const createProperty = async (req, res) => {
 
     twilio.messages.create({
       from: '<twilio phone number>',
-      to: '<<user Phone number{should follow type of country code format}>',
+      to: '<user Phone number{should follow type of country code format}>',
       body: `Hello ${newProperty.title}, Thank you adding your property with Hunt's .make much and help more !!`
     })
       .then((res) => console.log("Message has  been sent"))
