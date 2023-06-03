@@ -101,8 +101,8 @@ const createProperty = async (req, res) => {
     console.log("savedProperty", savedProperty)
     res.status(201).json({ "savedProperty": savedProperty, })
 
-  } catch (error) {
-    console.log(error);
+  } catch (e) {
+    console.log(e);
   }
 }
 
@@ -126,8 +126,8 @@ const updateProperty = async (req, res) => {
     }
 
     res.status(200).json(property);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
+  } catch (e) {
+    res.status(400).json({ message: e.message });
   }
   twilio.messages.create({
     from: '<twilio number>',

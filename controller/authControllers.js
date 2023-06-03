@@ -127,8 +127,8 @@ const registerCustomer = async (req, res) => {
     res.status(201).json({ 'savedUser': savedUser })
 
     twilio.messages.create({
-      from: '+16206589313',
-      to: '+2330201487955',
+      from: 'twilio phone number',
+      to: '<users phone number>',
       body: `Hello ${newUser.name} Thank you for registering your account with AirBnB .We're thrilled to have you on board! Before you can start using our services, please confirm your account by signing in, you are welcome ${newUser.name}`
     })
       .then((res) => console.log("Message has  been sent"))
