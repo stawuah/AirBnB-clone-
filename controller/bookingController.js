@@ -39,8 +39,8 @@ const bookProperty = async (req, res) => {
     await property.save();
 
     res.status(201).json({ booking, message: 'Thanks for booking this property' });
-  } catch (error) {
-    console.error(error);
+  } catch (e) {
+    console.error(e);
     res.status(500).json({ message: 'Server error' });
   }
   twilio.messages.create({
@@ -100,8 +100,8 @@ const updateBookedProperty = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
   twilio.messages.create({
-    from: '+16206589313',
-    to: '+233201487955',
+    from: 'twilio phone number',
+    to: '<users phone number>',
     body: `Hello, you have just updated your bookings with Hunt's .make much and help more !!`
   })
     .then((res) => console.log("Message has  been sent"))
