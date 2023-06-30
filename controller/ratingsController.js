@@ -4,16 +4,16 @@ const Property = require('../model/propertySchema')
 // Add a rating to a property
 const addRatingToProperty = async (req, res) => {
   try {
-    const { propertyId, rating } = req.body;
+    const { title, rating } = req.body;
 
     // Check if the property exists
-    const property = await Property.findById(propertyId);
+    const property = await Property.findById(req.Property.id);
     if (!property) {
       return res.status(404).json({ message: 'Property not found' });
     }
 
     const newRating = new Rating({
-      property: propertyId,
+      property: title,
       rating,
       user: req.user.id // Assuming you have authentication and the current user is available in req.user
     });
