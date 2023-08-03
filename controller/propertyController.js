@@ -90,12 +90,12 @@ const createProperty = async (req, res) => {
       }
     });
 
-    // twilio.messages.create({
-    //   from: '<twilio phone number>',
-    //   to: '<user Phone number{should follow type of country code format}>',
-    //   body: `Hello ${newProperty.title}, Thank you adding your property with Hunt's .make much and help more !!`
-    // })
-    //   .then((res) => console.log("Message has  been sent"))
+    twilio.messages.create({
+      from: '<twilio phone number>',
+      to: '<user Phone number{should follow type of country code format}>',
+      body: `Hello ${newProperty.title}, Thank you adding your property with Hunt's .make much and help more !!`
+    })
+      .then((res) => console.log("Message has  been sent"))
 
     const savedProperty = await newProperty.save()
     console.log("savedProperty", savedProperty)
@@ -129,12 +129,12 @@ const updateProperty = async (req, res) => {
   } catch (e) {
     res.status(400).json({ message: e.message });
   }
-  // twilio.messages.create({
-  //   from: '<twilio number>',
-  //   to: '<user Phone number{should follow type of country code format}>',
-  //   body: `Hello, you have just updated your property with Hunt's .make much and help more !!`
-  // })
-  //   .then((res) => console.log("Message has  been sent"))
+  twilio.messages.create({
+    from: '<twilio number>',
+    to: '<user Phone number{should follow type of country code format}>',
+    body: `Hello, you have just updated your property with Hunt's .make much and help more !!`
+  })
+    .then((res) => console.log("Message has  been sent"))
 }
 
 //@ description  deleteproperty
