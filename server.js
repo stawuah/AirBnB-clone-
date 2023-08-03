@@ -7,8 +7,10 @@ const connectDB = require('./config/db');
 const colors = require("colors")
 const app = express()
 const port = 8080
+const { StartPaymentInit, StartPaymentInitToken, Info } = require('./controller/paymentController')
 
-connectDB()
+const { protectJwt } = require('./middleware/authMiddleware');
+//connectDB()
 
 //app.use(cors())
 //app.use(helmet())
@@ -22,6 +24,10 @@ app.use('/api/properties/bookproperty', require('./routes/bookedRoute'))// post 
 app.use('/api/reservation', require('./routes/reservationRoute'))
 app.use('/api/auth', require('./routes/authRoute')) // login , register, = user
 
+
+app.post('/api', require('./routes/paymentRoute'))
+app.use('/api/', require('./routes/paymentRoute'))
+app.get('/api/info', Info)
 
 app.listen(port, () => {
     console.log(`server runing ${port} `);

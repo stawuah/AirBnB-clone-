@@ -1,6 +1,6 @@
 const Booking = require('../model/BookingSchema');
 const Property = require('../model/propertySchema')
-const twilio = require('twilio')(process.env.SID, process.env.AUTH_TOKEN)
+//const twilio = require('twilio')(process.env.SID, process.env.AUTH_TOKEN)
 require('dotenv').config()
 
 const bookProperty = async (req, res) => {
@@ -43,12 +43,13 @@ const bookProperty = async (req, res) => {
     console.error(e);
     res.status(500).json({ message: 'Server error' });
   }
-  twilio.messages.create({
-    from: '+16206589313',
-    to: '+233201487955',
-    body: `Hello, you have just made your bookings live life !!`
-  })
-    .then((res) => console.log("Message has  been sent"))
+
+  // twilio.messages.create({
+  //   from: '+16206589313',
+  //   to: '+233201487955',
+  //   body: `Hello, you have just made your bookings live it !!`
+  // })
+  //.then((res) => console.log("Message has  been sent"))
 
 };
 
@@ -99,12 +100,12 @@ const updateBookedProperty = async (req, res) => {
     console.error(error);
     res.status(500).json({ message: 'Server error' });
   }
-  twilio.messages.create({
-    from: 'twilio phone number',
-    to: '<users phone number>',
-    body: `Hello, you have just updated your bookings with Hunt's .make much and help more !!`
-  })
-    .then((res) => console.log("Message has  been sent"))
+  // twilio.messages.create({
+  //   from: 'twilio phone number',
+  //   to: '<users phone number>',
+  //   body: `Hello, you have just updated your bookings with AirBnB. live it!!`
+  // })
+  // .then((res) => console.log("Message has  been sent"))
 };
 
 

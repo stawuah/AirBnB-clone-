@@ -1,5 +1,5 @@
 const Reservation = require('../model/reservationSchema');
-const twilio = require('twilio')(process.env.SID, process.env.AUTH_TOKEN)
+//const twilio = require('twilio')(process.env.SID, process.env.AUTH_TOKEN)
 require('dotenv').config()
 
 
@@ -23,13 +23,13 @@ const createReservation = async (req, res) => {
     const savedReservation = await reservation.save();
 
     // Send Twilio message
-    twilio.messages
-      .create({
-        from: '<users phone number>',
-        to: '<<user Phone number{should follow type of country code format}>>',
-        body: `Hello, you have just made your bookings live life !!`
-      })
-      .then(() => console.log("Message has been sent"));
+    // twilio.messages
+    //   .create({
+    //     from: '<users phone number>',
+    //     to: '<<user Phone number{should follow type of country code format}>>',
+    //     body: `Hello, you have just made your bookings live life !!`
+    //   })
+    //   .then(() => console.log("Message has been sent"));
 
     res.status(201).json(savedReservation); // Return the saved reservation
   } catch (error) {

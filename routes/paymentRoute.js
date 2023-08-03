@@ -1,8 +1,10 @@
-// const express = require('express')
-// const router =  express.Router()
+const express = require('express')
+const router = express.Router()
 
-// const {protectJwt} = require('../middleware/authMiddleware');
-// const {initializePayment} = require('../controller/paymentController')
+const { protectJwt } = require('../middleware/authMiddleware');
+const { StartPaymentInit, StartPaymentInitToken } = require('../controller/paymentController')
 
-// router.post(initializePayment, protectJwt,'/transaction/initialize')
+router.post('/create_link_token', protectJwt, StartPaymentInitToken,)
+router.post('/api/create_link_token_for_payment', StartPaymentInit)
 
+module.exports = router

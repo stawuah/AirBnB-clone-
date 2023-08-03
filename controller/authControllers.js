@@ -17,9 +17,6 @@ cloudinary.config({
 });
 
 
-
-
-
 // login customer
 // Route    POST /api/user/login
 // access public
@@ -88,7 +85,7 @@ const uploadImage = async (imagePath) => {
   try {
     // Upload the image
     const result = await cloudinary.uploader.upload(imagePath, options);
-    // console.log(result);
+
     return result
   } catch (error) {
     console.error(error);
@@ -101,21 +98,21 @@ const uploadImage = async (imagePath) => {
 const registerCustomer = async (req, res) => {
 
   try {
-    const { name, email, password, image } = req.body
+    const { name, email, password } = req.body
 
     const salt = await bcrypt.genSalt(10)
     const hashedPassword = await bcrypt.hash(password, salt)
 
-    const imageName = await uploadImage(image);
-    console.log(imageName);
+    // const imageName = await uploadImage(image);
+    // console.log(imageName);
     const newUser = await new User({
       name,
       email,
       password: hashedPassword,
-      image: {
-        public_id: imageName.public_id,
-        url: imageName.secure_url
-      }
+      // image: {
+      //   public_id: imageName.public_id,
+      //   url: imageName.secure_url
+      // }
     })
 
     if (!newUser) {
@@ -123,15 +120,17 @@ const registerCustomer = async (req, res) => {
     }
 
 
-    const savedUser = await newUser.save()
-    res.status(201).json({ 'savedUser': savedUser })
+    res.status(201).json({ 'savedUser': newUser })
 
-    twilio.messages.create({
-      from: 'twilio phone number',
-      to: '<users phone number>',
-      body: `Hello ${newUser.name} Thank you for registering your account with AirBnB .We're thrilled to have you on board! Before you can start using our services, please confirm your account by signing in, you are welcome ${newUser.name}`
-    })
-      .then((res) => console.log("Message has  been sent"))
+    //const savedUser = await newUser.save()
+
+
+    // twilio.messages.create({
+    //   from: 'twilio phone number',
+    //   to: '<users phone number>',
+    //   body: `Hello ${newUser.name} Thank you for registering your account with AirBnB .We're thrilled to have you on board! Before you can start using our services, please confirm your account by signing in, you are welcome ${newUser.name}`
+    // })
+    //     .then((res) => console.log("Message has  been sent"))
 
   } catch (err) {
     console.log(err);
@@ -159,11 +158,11 @@ const forgotPassword = async (req, res,) => {
       email: check._id,
       token: generateToken().value
     })
-    twilio.messages.create({
-      from: '<twilio number>',
-      to: '<user Phone number{should follow type of country code format}>',
-      body: `Hello ${forgotUser.name} we received a request to reset your password for your account.this is your reset token ${forgotUser.token}`
-    })
+      // twilio.messages.create({
+      //   from: '<twilio number>',
+      //   to: '<user Phone number{should follow type of country code format}>',
+      //   body: `Hello ${forgotUser.name} we received a request to reset your password for your account.this is your reset token ${forgotUser.token}`
+      // })
       .then((res) => console.log("Message has  been sent"))
 
     // save existing user id and token in db
@@ -232,7 +231,7 @@ const resetPassword = async (req, res) => {
     forgotPassword.used = true;
     await forgotPassword.save();
 
-    res.status(200).json({ message: 'Kwasi well done for implementing Password reset (successful.)' });
+    res.status(200).json({ message: 'Password reset successful.' });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
