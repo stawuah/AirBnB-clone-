@@ -1,6 +1,6 @@
 const Booking = require('../model/BookingSchema');
 const Property = require('../model/propertySchema')
-//const twilio = require('twilio')(process.env.SID, process.env.AUTH_TOKEN)
+const twilio = require('twilio')(process.env.SID, process.env.AUTH_TOKEN)
 require('dotenv').config()
 
 const bookProperty = async (req, res) => {
