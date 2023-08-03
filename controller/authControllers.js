@@ -47,15 +47,14 @@ const login = async (req, res) => {
 // logout
 
 const logout = async (req, res) => {
-  res.clearCookie('token');
+  res.clearCookie('token', 'none');
   res.status(200).send({
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true,
     success: true,
     message: 'You have been logged out successfully!',
   });
 };
-
-
-
 
 // update user
 const updateCustomer = async (req, res) => {
